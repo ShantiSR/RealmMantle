@@ -15,6 +15,12 @@
 		556B52C31B6A901500F866D0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 556B52C21B6A901500F866D0 /* Images.xcassets */; };
 		556B52C61B6A901500F866D0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 556B52C41B6A901500F866D0 /* LaunchScreen.xib */; };
 		556B52D21B6A901500F866D0 /* RealmMantleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 556B52D11B6A901500F866D0 /* RealmMantleTests.m */; };
+		556B52DE1B6A931100F866D0 /* SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 556B52DD1B6A931100F866D0 /* SessionManager.m */; };
+		556B52E11B6A93DE00F866D0 /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 556B52E01B6A93DE00F866D0 /* APIManager.m */; };
+		556B52E51B6A964500F866D0 /* ArticleListRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 556B52E41B6A964500F866D0 /* ArticleListRequestModel.m */; };
+		556B52E81B6A985300F866D0 /* ArticleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 556B52E71B6A985300F866D0 /* ArticleModel.m */; };
+		556B52EB1B6A989100F866D0 /* ArticleListResponseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 556B52EA1B6A989100F866D0 /* ArticleListResponseModel.m */; };
+		556B52EF1B6A9AF700F866D0 /* ArticleRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = 556B52EE1B6A9AF700F866D0 /* ArticleRealm.m */; };
 		6C169E9931780FABAAFD4A1B /* libPods-RealmMantle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD0A059D2530124E7120166 /* libPods-RealmMantle.a */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +52,18 @@
 		556B52CB1B6A901500F866D0 /* RealmMantleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealmMantleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		556B52D01B6A901500F866D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		556B52D11B6A901500F866D0 /* RealmMantleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RealmMantleTests.m; sourceTree = "<group>"; };
+		556B52DC1B6A931100F866D0 /* SessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionManager.h; sourceTree = "<group>"; };
+		556B52DD1B6A931100F866D0 /* SessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionManager.m; sourceTree = "<group>"; };
+		556B52DF1B6A93DE00F866D0 /* APIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIManager.h; sourceTree = "<group>"; };
+		556B52E01B6A93DE00F866D0 /* APIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIManager.m; sourceTree = "<group>"; };
+		556B52E31B6A964500F866D0 /* ArticleListRequestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleListRequestModel.h; sourceTree = "<group>"; };
+		556B52E41B6A964500F866D0 /* ArticleListRequestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleListRequestModel.m; sourceTree = "<group>"; };
+		556B52E61B6A985300F866D0 /* ArticleModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleModel.h; sourceTree = "<group>"; };
+		556B52E71B6A985300F866D0 /* ArticleModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleModel.m; sourceTree = "<group>"; };
+		556B52E91B6A989100F866D0 /* ArticleListResponseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleListResponseModel.h; sourceTree = "<group>"; };
+		556B52EA1B6A989100F866D0 /* ArticleListResponseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleListResponseModel.m; sourceTree = "<group>"; };
+		556B52ED1B6A9AF700F866D0 /* ArticleRealm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleRealm.h; sourceTree = "<group>"; };
+		556B52EE1B6A9AF700F866D0 /* ArticleRealm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleRealm.m; sourceTree = "<group>"; };
 		FFD0A059D2530124E7120166 /* libPods-RealmMantle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RealmMantle.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -99,6 +117,9 @@
 		556B52B11B6A901400F866D0 /* RealmMantle */ = {
 			isa = PBXGroup;
 			children = (
+				556B52EC1B6A9ABE00F866D0 /* Realm */,
+				556B52E21B6A961600F866D0 /* Models */,
+				556B52DB1B6A92F900F866D0 /* Network */,
 				556B52B61B6A901400F866D0 /* AppDelegate.h */,
 				556B52B71B6A901400F866D0 /* AppDelegate.m */,
 				556B52B91B6A901400F866D0 /* MasterViewController.h */,
@@ -137,6 +158,40 @@
 				556B52D01B6A901500F866D0 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		556B52DB1B6A92F900F866D0 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				556B52DC1B6A931100F866D0 /* SessionManager.h */,
+				556B52DD1B6A931100F866D0 /* SessionManager.m */,
+				556B52DF1B6A93DE00F866D0 /* APIManager.h */,
+				556B52E01B6A93DE00F866D0 /* APIManager.m */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		556B52E21B6A961600F866D0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				556B52E31B6A964500F866D0 /* ArticleListRequestModel.h */,
+				556B52E41B6A964500F866D0 /* ArticleListRequestModel.m */,
+				556B52E61B6A985300F866D0 /* ArticleModel.h */,
+				556B52E71B6A985300F866D0 /* ArticleModel.m */,
+				556B52E91B6A989100F866D0 /* ArticleListResponseModel.h */,
+				556B52EA1B6A989100F866D0 /* ArticleListResponseModel.m */,
+			);
+			name = Models;
+			path = Model;
+			sourceTree = "<group>";
+		};
+		556B52EC1B6A9ABE00F866D0 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				556B52ED1B6A9AF700F866D0 /* ArticleRealm.h */,
+				556B52EE1B6A9AF700F866D0 /* ArticleRealm.m */,
+			);
+			path = Realm;
 			sourceTree = "<group>";
 		};
 		9471A084D5D3754C482E45C0 /* Pods */ = {
@@ -283,9 +338,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				556B52DE1B6A931100F866D0 /* SessionManager.m in Sources */,
 				556B52B81B6A901400F866D0 /* AppDelegate.m in Sources */,
+				556B52E11B6A93DE00F866D0 /* APIManager.m in Sources */,
+				556B52EB1B6A989100F866D0 /* ArticleListResponseModel.m in Sources */,
 				556B52BB1B6A901500F866D0 /* MasterViewController.m in Sources */,
 				556B52B51B6A901400F866D0 /* main.m in Sources */,
+				556B52EF1B6A9AF700F866D0 /* ArticleRealm.m in Sources */,
+				556B52E51B6A964500F866D0 /* ArticleListRequestModel.m in Sources */,
+				556B52E81B6A985300F866D0 /* ArticleModel.m in Sources */,
 				556B52BE1B6A901500F866D0 /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

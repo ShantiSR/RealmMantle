@@ -8,57 +8,63 @@
 
 #import "MasterViewController.h"
 #import "DetailViewController.h"
+#import "APIManager.h"
+#import "RLMRealm.h"
+#import "RLMResults.h"
+#import "ArticleRealm.h"
 
 @interface MasterViewController ()
 
-@property NSMutableArray *objects;
+@property (nonatomic, strong) RLMResults *articles;
+
 @end
 
 @implementation MasterViewController
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        self.clearsSelectionOnViewWillAppear = NO;
-        self.preferredContentSize = CGSizeMake(320.0, 600.0);
-    }
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
-    self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    
+    ArticleListRequestModel *requestModel = [ArticleListRequestModel new];
+    requestModel.query = @"Basketball";
+    requestModel.articlesToDate = [[ArticleListRequestModel dateFormatter] dateFromString:@"20150706"];
+    requestModel.articlesFromDate = [[ArticleListRequestModel dateFormatter] dateFromString:@"20150701"];
+    
+    [[APIManager sharedManager] getArticlesWithRequestModel:requestModel success:^(ArticleListResponseModel *responseModel) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            @autoreleasepool {
+                
+                RLMRealm *realm = [RLMRealm defaultRealm];
+                [realm beginWriteTransaction];
+                [realm deleteAllObjects];
+                [realm commitWriteTransaction];
+                
+                [realm beginWriteTransaction];
+                for(ArticleModel *article in responseModel.articles){
+                    ArticleRealm *articleRealm = [[ArticleRealm alloc] initWithMantleModel:article];
+                    [realm addObject:articleRealm];
+                }
+                [realm commitWriteTransaction];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    RLMRealm *realmMainThread = [RLMRealm defaultRealm];
+                    RLMResults *articles = [ArticleRealm allObjectsInRealm:realmMainThread];
+                    self.articles = articles;
+                    [self.tableView reloadData];
+                });
+            }
+        });
+        
+    } failure:^(NSError *error) {
+        self.articles = [ArticleRealm allObjects];
+        [self.tableView reloadData];
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)insertNewObject:(id)sender {
-    if (!self.objects) {
-        self.objects = [[NSMutableArray alloc] init];
-    }
-    [self.objects insertObject:[NSDate date] atIndex:0];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-}
-
-#pragma mark - Segues
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = self.objects[indexPath.row];
-        DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
-        [controller setDetailItem:object];
-        controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-        controller.navigationItem.leftItemsSupplementBackButton = YES;
-    }
 }
 
 #pragma mark - Table View
@@ -68,28 +74,24 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.objects.count;
+    return [self.articles count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-
-    NSDate *object = self.objects[indexPath.row];
-    cell.textLabel.text = [object description];
+    
+    ArticleRealm *article = self.articles[[indexPath item]];
+    cell.textLabel.text = article.leadParagraph;
     return cell;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
+#pragma mark - Navigation
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.objects removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"showDetail"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        ArticleModel *article = self.articles[indexPath.row];
+        [[segue destinationViewController] setUrl:article.url];
     }
 }
 
